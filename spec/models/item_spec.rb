@@ -77,10 +77,15 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include "Delivery date can't be blank"
       end
+      it '価格が空だと出品できない' do
+        @item.price = ''
+        @item.valid?
+        expect(@item.errors.full_messages).to include "Price can't be blank"
+      end
       it '価格が全角だと出品できない' do
         @item.price = '１１１１'
         @item.valid?
-        expect(@item.errors.full_messages).to include 'Price invalid. Input half-width characters'
+        expect(@item.errors.full_messages).to include 'Price Half-width number'
       end
       it '価格が300円より低いと出品できない' do
         @item.price = 299
@@ -91,6 +96,11 @@ RSpec.describe Item, type: :model do
         @item.price = 11_111_111_299
         @item.valid?
         expect(@item.errors.full_messages).to include 'Price is out of setting range'
+      end
+      it 'ユーザーが紐付いていなければ投稿できない' do
+        @item.user = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include('User must exist')
       end
     end
   end
