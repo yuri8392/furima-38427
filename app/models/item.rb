@@ -15,11 +15,11 @@ class Item < ApplicationRecord
     validates :image
   end
 
-  validates :price, numericality: { with: /\A[0-9]+\z/, message: 'invalid. Input half-width characters' }                  
+  validates :price, numericality: { with: /\A[0-9]+\z/, message: 'invalid. Input half-width characters' }
   validates :price,
             numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999, message: 'is out of setting range' }
 
-  with_options presence: true, numericality: { other_than: 1 , message: "can't be blank"}  do   
+  with_options presence: true, numericality: { other_than: 1, message: "can't be blank" } do
     validates :category_id
     validates :item_status_id
     validates :delivery_charge_id
