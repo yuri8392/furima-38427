@@ -9,11 +9,20 @@ RSpec.describe PurchaseDestination, type: :model do
 
   describe '商品購入' do
     context '商品が購入できるとき' do
-      it 'token,郵便番号、都道府県、市区町村、番地、建物名、電話番号があれば購入できる' do
+      it 'token,郵便番号、都道府県、市区町村、番地、電話番号があれば購入できる' do
+        expect(@purchase_destination).to be_valid
+      end
+      it '建物名が空でも購入できる' do
+        @purchase_destination.building_name = ''
         expect(@purchase_destination).to be_valid
       end
     end
     context '商品が購入できないとき' do
+      it 'tokenが空では購入できない' do
+        @purchase_destination.token = ''
+        @purchase_destination.valid?
+        expect(@purchase_destination.errors.full_messages).to include "Token can't be blank"
+      end
       it '郵便番号が空では購入できない' do
         @purchase_destination.post_code = ''
         @purchase_destination.valid?
@@ -49,7 +58,12 @@ RSpec.describe PurchaseDestination, type: :model do
         @purchase_destination.valid?
         expect(@purchase_destination.errors.full_messages).to include "Phone number can't be blank"
       end
-      it '電話番号が10桁以上11桁以内の半角数値以外だと購入できない' do
+      it '電話番号が9桁以下の半角数値以外だと購入できない' do
+        @purchase_destination.phone_number = 1_234_567
+        @purchase_destination.valid?
+        expect(@purchase_destination.errors.full_messages).to include 'Phone number is too short'
+      end
+      it '電話番号が12桁以上の半角数値以外だと購入できない' do
         @purchase_destination.phone_number = 123_456_789_012
         @purchase_destination.valid?
         expect(@purchase_destination.errors.full_messages).to include 'Phone number is too short'
