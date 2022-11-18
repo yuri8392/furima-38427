@@ -58,15 +58,15 @@ RSpec.describe PurchaseDestination, type: :model do
         @purchase_destination.valid?
         expect(@purchase_destination.errors.full_messages).to include "Phone number can't be blank"
       end
-      it '電話番号が9桁以下の半角数値以外だと購入できない' do
-        @purchase_destination.phone_number = 1_234_567
+      it '電話番号が9桁以下の半角数値だと購入できない' do
+        @purchase_destination.phone_number = 123_456_789
         @purchase_destination.valid?
-        expect(@purchase_destination.errors.full_messages).to include 'Phone number is too short'
+        expect(@purchase_destination.errors.full_messages).to include 'Phone number please enter in 10 or 11 digits'
       end
-      it '電話番号が12桁以上の半角数値以外だと購入できない' do
+      it '電話番号が12桁以上の半角数値だと購入できない' do
         @purchase_destination.phone_number = 123_456_789_012
         @purchase_destination.valid?
-        expect(@purchase_destination.errors.full_messages).to include 'Phone number is too short'
+        expect(@purchase_destination.errors.full_messages).to include 'Phone number please enter in 10 or 11 digits'
       end
       it '電話番号が半角数字以外だと購入できない' do
         @purchase_destination.phone_number = '090-1111-1111'

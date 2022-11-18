@@ -10,7 +10,7 @@ class PurchaseDestination
     validates :prefecture_id, numericality: { other_than: 1, message: "can't be blank" }
     validates :city
     validates :address
-    validates :phone_number, format: { with: /\A[0-9]{10,11}\z/, message: 'is too short' }
+    validates :phone_number, format: { with: /\A[0-9]{10,11}\z/, message: 'please enter in 10 or 11 digits' }
     validates :phone_number, numericality: { only_integer: true, message: 'is invalid. Input only number' }
   end
 
