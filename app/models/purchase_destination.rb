@@ -6,12 +6,12 @@ class PurchaseDestination
     validates :token
     validates :user_id
     validates :item_id
-    validates :post_code, format: { with: /\A[0-9]{3}-[0-9]{4}\z/, message: 'is follows (e.g. 123-4567)' }
-    validates :prefecture_id, numericality: { other_than: 1, message: "can't be blank" }
+    validates :post_code, format: { with: /\A[0-9]{3}-[0-9]{4}\z/, message: 'は３桁-４桁で入力してください' }
+    validates :prefecture_id, numericality: { other_than: 1, message: 'を入力してください' }
     validates :city
     validates :address
-    validates :phone_number, format: { with: /\A[0-9]{10,11}\z/, message: 'please enter in 10 or 11 digits' }
-    validates :phone_number, numericality: { only_integer: true, message: 'is invalid. Input only number' }
+    validates :phone_number, format: { with: /\A[0-9]{10,11}\z/, message: 'は半角数字で10もしくは11桁で入力してください' }
+    validates :phone_number, numericality: { only_integer: true, message: 'はハイフンを除いて数字のみで入力してください' }
   end
 
   def save

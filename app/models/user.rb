@@ -13,16 +13,16 @@ class User < ApplicationRecord
   end
 
   validates :password,
-            format: { with: /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i, message: 'is invalid. Include both letters and numbers' }
+            format: { with: /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i, message: 'は半角英数字を入力してください' }
 
-  with_options presence: true, format: { with: /\A[ぁ-んァ-ヶ一-龥々ー]+\z/, message: 'is invalid. Input full-width characters' } do
+  with_options presence: true, format: { with: /\A[ぁ-んァ-ヶ一-龥々ー]+\z/, message: 'は全角で入力してください' } do
     validates :last_name
     validates :first_name
   end
 
   with_options presence: true,
                format: { with: /\A[\p{katakana}ー－&&[^ -~｡-ﾟ]]+\z/,
-                         message: 'is invalid. Input full-width katakana characters' } do
+                         message: 'は全角カタカナで入力してください' } do
     validates :last_name_kana
     validates :first_name_kana
   end
