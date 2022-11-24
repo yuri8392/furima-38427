@@ -1,24 +1,23 @@
 .preview-image {
-  height: 100%;
-  width: 100%;
-}
-
-.other-images {
-  display: flex;
-}
-
-.other-image {
-  margin-right: 10px;
+  height: 33vh;
+  width: 33vw;
+  object-fit: contain;
 }
 
 .image-delete-button {
+  min-width: 250px;
   text-align: center;
   border: solid 1px;
   cursor: pointer;
 }
 
-.main-image {
-  height: 100%;
-  width: 100%;
+.items-scroll{
+  display: flex;
+  flex-wrap: wrap;
 }
-
+.items-scroll img {
+  height:  33vh;
+  width: 33vw;
+  display:block;
+  margin:0 auto;
+}
