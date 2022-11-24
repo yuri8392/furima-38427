@@ -17,6 +17,8 @@ class Item < ApplicationRecord
     validates :price
   end
 
+  validates :images, length: { minimum: 1, maximum: 4, message: 'は1枚以上4枚以下にしてください' }
+
   validates :price, numericality: { only_integer: true, message: 'は半角数字で入力してください' }
   validates :price,
             numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999,
