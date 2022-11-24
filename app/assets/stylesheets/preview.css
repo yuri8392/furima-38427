@@ -1,0 +1,11 @@
+.preview{
+  margin-right: 30px;
+}
+
+.image-delete-button {
+  min-width: 250px;
+  text-align: center;
+  border: solid 1px;
+  cursor: pointer;
+  margin-bottom: 5px;
+}

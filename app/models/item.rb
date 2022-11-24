@@ -1,5 +1,5 @@
 class Item < ApplicationRecord
-  has_one_attached :image
+  has_many_attached :images
   belongs_to :user
   has_one :purchase
 
@@ -13,9 +13,11 @@ class Item < ApplicationRecord
   with_options presence: true do
     validates :name
     validates :description
-    validates :image
+    validates :images
     validates :price
   end
+
+  validates :images, length: { minimum: 1, maximum: 4, message: 'は1枚以上4枚以下にしてください' }
 
   validates :price, numericality: { only_integer: true, message: 'は半角数字で入力してください' }
   validates :price,
