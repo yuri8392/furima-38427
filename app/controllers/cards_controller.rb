@@ -1,4 +1,8 @@
 class CardsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_card
+  before_action :redirect, only: [:update, :destroy]
+
   def new
     @card = Card.new
   end
@@ -22,6 +26,29 @@ class CardsController < ApplicationController
       redirect_to root_path
     end
   end
-  
+
+  def show
+    redirect_to action:'new' && return unless @card.present?
+    customer = Payjp::Customer.retrieve(@card.customer_token)
+    @card = customer.cards.first
+  end
+
+  def destroy
+    customer = Payjp::Customer.retrieve(@card.customer_token)
+    customer.delete
+
+    redirect_to action:'new' if @card.destroy
+  end
+
+  private
+  def set_card
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+    @card = Card.find_by(user_id: current_user.id)
+  end
+
+  # def redirect
+  #   redirect_to action: :new unless current_user.id == @card.user.id
+  # end
+
  end
  
