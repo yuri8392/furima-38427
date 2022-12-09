@@ -22,9 +22,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def pay
     Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
     @user = User.new(session["devise.regist_data"]["user"])
+    @card = @user.build_card
   
     if params['card_token'].blank?
-      redirect_to action:new_card
+      render :new_card
     else
       @user.save
       session["devise.regist_data"]["user"].clear
@@ -44,15 +45,22 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
   end
 
-  # GET /resource/edit
-  # def edit
-  #   super
-  # end
+  def edit
+  end
 
-  # PUT /resource
-  # def update
-  #   super
-  # end
+  def update
+    if current_user.update(user_params)
+      redirect_to root_path
+    else
+      render :edit
+    end
+  end
+  
+  private
+
+  def user_params
+    params.require(:user).permit(:nickname, :email, :last_name, :first_name, :last_name_kana, :first_name_kana, :birthday)
+  end
 
   # DELETE /resource
   # def destroy
